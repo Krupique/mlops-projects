@@ -13,8 +13,8 @@
 	
 ### **3. Dividir os dados em Treino e Testes**
 * A técnica mais comum é a divisão 70/30
-* Caso o conjunto seja muito grande, utilizar alguma técnica de amostragem
-* Caso o conjunto seja muito pequeno, utilizar bootstrap
+* Caso o conjunto seja grande, utilizar alguma técnica de amostragem
+* Caso o conjunto seja pequeno, utilizar bootstrap
 > **NOTA**: Qualquer transformação a seguir, aplicar no conjunto de testes seguindo as regras do conjunto de treino, a fim de evitar vazão de informação.
 
 ### **4. Lidar com Outliers**
@@ -28,7 +28,7 @@
 ### **6. Transformação dos dados**
 * **[CATEGORIA]** Aplicar label encoding se houver hierárquia nos dados categóricos.
 * **[CATEGORIA]** Aplicar o one hot encoding quando não há hierárquia.
-* {CATEGORIA} Aplicar o **[category_encoders.TargetEncoder]** para converter categorias em probabilidades.
+* **{CATEGORIA}** Aplicar o **[category_encoders.TargetEncoder]** para converter categorias em probabilidades.
 * **[CATEGORIA]** Criar grupos quando há muitas categorias.
 * **[CONTÍNUOS]** Aplicar técnicas de padronização **[Standard, Robust, Quantile, Normalization]**
 
