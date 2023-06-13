@@ -47,6 +47,8 @@
 	
 ### **10. Balanceamento de classes**
 * Certificar de que a proporção entre as classes estejam balanceadas **[Remover registros, criar novos registros fake]**
+* Upsampling com scikit learn resample ou imblearn over sampling com algoritmo **[SMOTE ou ADASYN]**: *[2] Cap 09*.
+* Downsampling.
 	
 ### **11. Primeira modelagem**
 * Criar um modelo completamente aleatório pra ter como base **[Random ou selecionar um algoritmo qualquer]**
