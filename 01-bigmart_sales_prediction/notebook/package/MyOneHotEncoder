@@ -1,0 +1,65 @@
+import pandas as pd
+from sklearn.preprocessing import OneHotEncoder
+
+class MyHotEncoder:
+    def __init__(self, df, cols):
+        self.df = df
+        self.list_oneHotEncoder = []
+        self.list_col = []
+
+        if isinstance(cols, list):
+            self.list_col = cols
+        else:
+            self.list_col.append(cols)
+
+    #Treina os dados passados.
+    def fit_transform(self):
+
+        self.df.reset_index(drop=True, inplace=True) #Reseta o index do dataset para não causar problemas
+        X = self.df.values
+
+        #Para cada coluna crie uma string contendo o nome do atributo e o nome da categoria.
+        #Exemplo de saída: [sex_male]
+        for col in self.list_col: 
+            valores = list(self.df[col].sort_values().unique())
+            colunas = []
+            for i in valores:
+                colunas.append(col + '_' + str(i))
+            colunas = colunas + list(self.df.columns)
+            
+            #One hot encoder para treinar
+            onehotencoder = OneHotEncoder(handle_unknown='ignore')
+            self.list_oneHotEncoder.append(onehotencoder)
+
+            enc_df = onehotencoder.fit_transform(self.df[[col]]).toarray()
+            enc_df = pd.DataFrame(enc_df)
+            
+            #União do dataset gerado ao dataset original
+            self.df = enc_df.join(self.df)
+            self.df.columns = colunas
+            self.df.drop(col, axis=1, inplace=True)
+        
+        return self.df
+
+    #Apenas aplica a transformação a novos dados.
+    def transform(self, df):
+        
+        for i in range(len(self.list_col)):
+            col = self.list_col[i]
+
+            valores = list(df[col].sort_values().unique())
+            colunas = []
+            for j in valores:
+                colunas.append(col + '_' + str(j))
+            colunas = colunas + list(df.columns)
+
+            #One hot encoder para transformar
+            enc_df = self.list_oneHotEncoder[i].transform(df[[col]]).toarray()
+            enc_df = pd.DataFrame(enc_df)
+
+            #União do dataset gerado ao dataset original
+            df = enc_df.join(df)
+            df.columns = colunas
+            df.drop(col, axis=1, inplace=True)
+
+        return df   
